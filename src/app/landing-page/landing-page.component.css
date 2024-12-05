@@ -1,0 +1,47 @@
+.welc-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.welcome{
+  margin-bottom: 3%;
+    background-color: white;
+    border-radius: 30px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 10%;
+}
+.title {
+    font-size: 40px;
+    width: 60%;
+}
+.sub-Kstitle {
+  font-size: 40px;
+  width: 60%;
+}
+.main {
+    
+}
+#myVideo {
+    z-index: -1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+#videoSection{
+  position: relative;
+  height: 85vh; /* Full viewport height */
+  width: 100%;
+}
+  .content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+  }
