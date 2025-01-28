@@ -47,20 +47,20 @@ export class RoomService {
       price: 450,
       images: [
         {
-          src: "suites_photos/standard_family/img1.jpg",
+          src: "suites_photos/standard_family/standard_family_bed1.jpg",
           alt: "Przestronny pokój rodzinny z dwoma łóżkami"
         },
         {
-          src: "suites_photos/standard_family/img2.jpg",
-          alt: "Kącik zabaw dla dzieci"
+          src: "suites_photos/standard_family/standard_family_bed2.jpg",
+          alt: "Druga perspektywa pokoju rodzinnego"
         },
         {
-          src: "suites_photos/standard_family/img3.jpg",
+          src: "suites_photos/standard_family/standard_family_bathroom.jpg",
           alt: "Łazienka rodzinna"
         },
         {
-          src: "suites_photos/standard_family/img4.jpg",
-          alt: "Widok na park z pokoju"
+          src: "suites_photos/standard_family/standard_family_desk.jpg",
+          alt: "Widok na biurko w pokoju rodzinnym"
         }
       ]
     },
@@ -75,19 +75,19 @@ export class RoomService {
   price: 500,
   images: [
     {
-      src: "suites_photos/deluxe/img1.jpg",
+      src: "suites_photos/deluxe/deluxe_bed3.jpg",
       alt: "Eleganckie wnętrze pokoju Deluxe"
     },
     {
-      src: "suites_photos/deluxe/img2.jpg",
+      src: "suites_photos/deluxe/deluxe_bathroom2.jpg",
       alt: "Luksusowa łazienka z wanną"
     },
     {
-      src: "suites_photos/deluxe/img3.jpg",
+      src: "suites_photos/deluxe/deluxe_bed5.jpg",
       alt: "Strefa wypoczynkowa"
     },
     {
-      src: "suites_photos/deluxe/img4.jpg",
+      src: "suites_photos/deluxe/deluxe_desk.jpg",
       alt: "Panoramiczny widok z okna"
     }
   ]
@@ -103,19 +103,19 @@ export class RoomService {
     price: 650,
     images: [
       {
-        src: "suites_photos/deluxe_family/img1.jpg",
+        src: "suites_photos/deluxe_family/deluxe_family_bed1.jpg",
         alt: "Główna sypialnia Deluxe Family"
       },
       {
-        src: "suites_photos/deluxe_family/img2.jpg",
+        src: "suites_photos/deluxe_family/deluxe_family_bathroom.jpg",
         alt: "Pokój dziecięcy"
       },
       {
-        src: "suites_photos/deluxe_family/img3.jpg",
+        src: "suites_photos/deluxe_family/deluxe_family_livingroom.jpg",
         alt: "Salon rodzinny"
       },
       {
-        src: "suites_photos/deluxe_family/img4.jpg",
+        src: "suites_photos/deluxe_family/deluxe_family_view.jpg",
         alt: "Strefa zabaw dla dzieci"
       }
     ]
@@ -131,19 +131,19 @@ export class RoomService {
   price: 700,
   images: [
     {
-      src: "suites_photos/premier/img1.jpg",
+      src: "suites_photos/premier/premier_bed1.jpg",
       alt: "Luksusowa sypialnia Premier"
     },
     {
-      src: "suites_photos/premier/img2.jpg",
+      src: "suites_photos/premier/premier_bed2.jpg",
       alt: "Elegancki salon"
     },
     {
-      src: "suites_photos/premier/img3.jpg",
+      src: "suites_photos/premier/premier_bathroom.jpg",
       alt: "Łazienka z jacuzzi"
     },
     {
-      src: "suites_photos/premier/img4.jpg",
+      src: "suites_photos/premier/premier_view.jpg",
       alt: "Widok z tarasu"
     }
   ]
@@ -159,19 +159,19 @@ view: "Panoramiczny widok na centrum biznesowe miasta",
 price: 800,
 images: [
   {
-    src: "suites_photos/executive/img1.jpg",
+    src: "suites_photos/executive/executive_room.jpg",
     alt: "Przestronna sypialnia Executive"
   },
   {
-    src: "suites_photos/executive/img2.jpg",
+    src: "suites_photos/executive/executive_room2.jpg",
     alt: "Profesjonalna strefa biurowa"
   },
   {
-    src: "suites_photos/executive/img3.jpg",
+    src: "suites_photos/executive/executive_bathroom.jpg",
     alt: "Salon biznesowy"
   },
   {
-    src: "suites_photos/executive/img4.jpg",
+    src: "suites_photos/executive/executive_lounge.jpg",
     alt: "Widok na centrum biznesowe"
   }
 ]
