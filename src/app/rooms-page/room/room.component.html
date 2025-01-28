@@ -1,0 +1,47 @@
+<div class="bg-white">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[2fr_5fr] lg:px-8">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        {{ roomData.title }}
+      </h2>
+      <p class="mt-4 text-gray-500">{{ roomData.description }}</p>
+      
+      <dl class="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
+        <div class="border-t border-gray-200 pt-4">
+          <dt class="font-medium text-gray-900">Liczba osób</dt>
+          <dd class="mt-2 text-sm text-gray-500">{{ roomData.capacity }}</dd>
+        </div>
+        
+        <div class="border-t border-gray-200 pt-4">
+          <dt class="font-medium text-gray-900">Udogodnienia</dt>
+          <dd class="mt-2 text-sm text-gray-500">{{ roomData.amenities }}</dd>
+        </div>
+        
+        <div class="border-t border-gray-200 pt-4">
+          <dt class="font-medium text-gray-900">Wyposażenie dodatkowe</dt>
+          <dd class="mt-2 text-sm text-gray-500">{{ roomData.additionalEquipment }}</dd>
+        </div>
+        
+        <div class="border-t border-gray-200 pt-4">
+          <dt class="font-medium text-gray-900">Widok</dt>
+          <dd class="mt-2 text-sm text-gray-500">{{ roomData.view }}</dd>
+        </div>
+      </dl>
+      
+      <button class="button-89 mt-8" role="button" (click)="onBookNow()">
+        Rezerwuj teraz
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+      @for (image of roomData.images; track $index) {
+      <img 
+        
+        [src]="image.src"
+        [alt]="image.alt"
+        class="rounded-lg bg-gray-100 w-full h-full object-cover"
+      >
+      }
+    </div>
+  </div>
+</div>

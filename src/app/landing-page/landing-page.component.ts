@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { BlogComponent } from "../blog/blog.component";
+import { NewsletterComponent } from "../newsletter/newsletter.component";
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [BlogComponent],
+  imports: [BlogComponent, NewsletterComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })

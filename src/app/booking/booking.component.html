@@ -1,0 +1,38 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="space-y-4 p-6 bg-white rounded-lg shadow">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Check-in Date</label>
+        <input type="date" formControlName="checkIn" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Check-out Date</label>
+        <input type="date" formControlName="checkOut" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+        <input type="text" formControlName="guestName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" formControlName="guestEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone</label>
+        <input type="tel" formControlName="guestPhone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Number of Guests</label>
+        <input type="number" formControlName="numberOfGuests" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+      </div>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Special Requests</label>
+      <textarea formControlName="specialRequests" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
+    </div>
+    <div class="flex justify-between items-center">
+      <p class="text-lg font-bold">Total: {{calculateTotal() | currency:'PLN'}}</p>
+      <button type="submit" [disabled]="bookingForm.invalid || isSubmitting" class="button-89">
+        {{isSubmitting ? 'Processing...' : 'Confirm Booking'}}
+      </button>
+    </div>
+  </form>

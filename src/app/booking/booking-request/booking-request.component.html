@@ -1,0 +1,105 @@
+<div class="max-w-2xl mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-6">Rezerwacja pokoju</h2>
+    
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Dates -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Data zameldowania</label>
+          <input 
+            type="date" 
+            formControlName="checkIn"
+            class="w-full p-2 border rounded"
+            [min]="today"
+          >
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">Data wymeldowania</label>
+          <input 
+            type="date" 
+            formControlName="checkOut"
+            class="w-full p-2 border rounded"
+            [min]="minCheckOutDate"
+          >
+        </div>
+      </div>
+
+      <!-- Guest Info -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Imię i nazwisko</label>
+          <input 
+            type="text" 
+            formControlName="guestName"
+            class="w-full p-2 border rounded"
+            placeholder="Jan Kowalski"
+          >
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Email</label>
+          <input 
+            type="email" 
+            formControlName="guestEmail"
+            class="w-full p-2 border rounded"
+            placeholder="jan@example.com"
+          >
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Telefon</label>
+          <input 
+            type="tel" 
+            formControlName="guestPhone"
+            class="w-full p-2 border rounded"
+            placeholder="+48 123 456 789"
+          >
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Liczba gości</label>
+          <input 
+            type="number" 
+            formControlName="numberOfGuests"
+            class="w-full p-2 border rounded"
+            min="1"
+          >
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Dodatkowe uwagi</label>
+          <textarea 
+            formControlName="specialRequests"
+            class="w-full p-2 border rounded"
+            rows="3"
+            placeholder="Specjalne życzenia, uwagi..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-between items-center">
+        <button 
+          type="button" 
+          class="px-4 py-2 text-gray-600 border rounded"
+          (click)="goBack()"
+        >
+          Anuluj
+        </button>
+        
+        <button 
+          type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded"
+          [disabled]="bookingForm.invalid || isSubmitting"
+        >
+          {{ isSubmitting ? 'Przetwarzanie...' : 'Potwierdź rezerwację' }}
+        </button>
+      </div>
+    </form>
+
+    @if (errorMessage) {
+      <div class="mt-4 p-4 bg-red-100 text-red-700 rounded">
+        {{ errorMessage }}
+      </div>
+    }
+  </div>

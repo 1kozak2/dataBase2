@@ -10,15 +10,17 @@ header{
     font-style: normal;
     font-size: clamp(1rem, 1vw, 2rem);
     height: auto;
+    padding: 1rem;
 }
 .desktop-logo{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    
     
 }
 .desktop-logo  img{
-    width: clamp(2rem, 3vw, 4rem);
+    width: clamp(5rem, 5vw, 4rem);
 }
 .desktop-logo > h1{
     margin: 0px;
