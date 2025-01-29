@@ -1,0 +1,86 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Profile Info -->
+      <div class="md:col-span-1">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="text-center mb-6">
+            <div class="h-24 w-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
+              <span class="text-3xl text-blue-600">
+                {{ userInitials }}
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900">
+                {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+              </h2>
+              <p class="text-gray-600">ID klienta: {{ currentUser?.id }}</p>
+            </div>
+
+            <div class="border-t pt-4">
+              <h3 class="text-lg font-medium text-gray-900 mb-2">Dane kontaktowe</h3>
+              <p class="text-gray-600">{{ currentUser?.email }}</p>
+              <p class="text-gray-600">{{ currentUser?.phone || 'Brak numeru telefonu' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings -->
+      <div class="md:col-span-2">
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6 border-b">
+            <h2 class="text-xl font-semibold text-gray-900">Moje Rezerwacje</h2>
+          </div>
+
+          @if (isLoading) {
+            <div class="p-6 text-center">
+              <p>Ładowanie rezerwacji...</p>
+            </div>
+          } @else if (bookings.length === 0) {
+            <div class="p-6 text-center">
+              <p class="text-gray-500">Nie masz jeszcze żadnych rezerwacji</p>
+              <a 
+                routerLink="/suites-and-rooms" 
+                class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Zarezerwuj pokój
+              </a>
+            </div>
+          } @else {
+            <div class="divide-y">
+              @for (booking of bookings; track booking.ID) {
+                <div class="p-6 hover:bg-gray-50">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h3 class="text-lg font-medium text-gray-900">
+                        Rezerwacja #{{ booking.ID }}
+                      </h3>
+                      <p class="text-gray-600">Pokój {{ booking.roomNumber }} ({{ booking.roomClass }})</p>
+                      <div class="mt-2 space-y-1 text-sm">
+                        <p>Check-in: {{ booking.Termin_rezerwacji | date }}</p>
+                        <p>Check-out: {{ booking.Termin_wymeldowania | date }}</p>
+                        <p>Wyżywienie: {{ booking.Wyzywienie || 'Bez wyżywienia' }}</p>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-lg font-bold text-gray-900">
+                        {{ booking.DoZaplaty }} PLN
+                      </p>
+                      @if (isUpcoming(booking.Termin_rezerwacji)) {
+                        <span class="mt-1 inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                          Nadchodząca
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>

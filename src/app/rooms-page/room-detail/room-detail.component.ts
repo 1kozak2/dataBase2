@@ -5,10 +5,11 @@ import { RoomService } from '../../services/room.service';
 import { describe } from 'node:test';
 import { BookingComponent } from '../../booking/booking.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BookingRequestComponent } from "../../booking/booking-request/booking-request.component";
 @Component({
   selector: 'app-room-detail',
   standalone: true,
-  imports: [BookingComponent,  HttpClientModule,],
+  imports: [HttpClientModule, BookingRequestComponent],
   templateUrl: './room-detail.component.html',
   styleUrl: './room-detail.component.css'
 })

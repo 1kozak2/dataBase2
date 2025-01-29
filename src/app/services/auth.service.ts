@@ -1,119 +1,82 @@
-// src/app/services/auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
+import { User, AuthResponse, UserRole } from '../user';
 
-export interface User {
-  id: number;
-  email: string;
-  token?: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // Your API URL
-  private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
+  private apiUrl = 'http://localhost:3001/api';
+  private currentUserSubject = new BehaviorSubject<any>(this.getUserFromStorage());
+  currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      this.getUserFromStorage()
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {}
+
+  private getUserFromStorage() {
+    const userStr = localStorage.getItem('currentUser');
+    try {
+      return userStr ? JSON.parse(userStr) : null;
+    } catch {
+      return null;
+    }
   }
-
-  private getUserFromStorage(): User | null {
-    const storedUser = localStorage.getItem('currentUser');
-    return storedUser ? JSON.parse(storedUser) : null;
-  }
-
-  public get currentUserValue(): User | null {
-    return this.currentUserSubject.value;
-  }
-
-  public get isLoggedIn(): boolean {
-    return !!this.currentUserValue?.token;
-  }
-
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/login`, { email, password })
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, password })
       .pipe(
-        map(response => {
-          // Store user details and jwt token in local storage
-          localStorage.setItem('currentUser', JSON.stringify(response));
-          this.currentUserSubject.next(response);
-          return response;
+        tap(response => {
+          console.log('Login response:', response); // Debug log
+          if (response.user && response.token) {
+            // Store complete user object
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
+            localStorage.setItem('token', response.token);
+            this.currentUserSubject.next(response.user);
+          }
         })
       );
   }
 
-  register(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, {
-      email,
-      password
-    });
+
+  register(userData: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    password: string;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, userData);
   }
 
   logout(): void {
-    // Remove user from local storage
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
-    // Navigate to login page
-    this.router.navigate(['/login']);
   }
 
-  // Method to check if token is expired
-  isTokenExpired(): boolean {
-    const user = this.currentUserValue;
-    if (!user?.token) return true;
-
-    try {
-      const token = user.token;
-      const tokenData = JSON.parse(atob(token.split('.')[1]));
-      const expirationDate = new Date(tokenData.exp * 1000);
-      return expirationDate < new Date();
-    } catch {
-      return true;
-    }
+  isLoggedIn(): boolean {
+    return !!this.currentUserSubject.value;
   }
 
-  // Method to refresh token
-  refreshToken(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/refresh-token`, {
-      token: this.currentUserValue?.token
-    }).pipe(
-      map(response => {
-        const user = { ...this.currentUserValue, ...response };
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return response;
-      })
-    );
+  hasRole(role: UserRole): boolean {
+    return this.currentUserSubject.value?.role === role;
   }
 
-  // Method to update user profile
-  updateProfile(userData: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/users/profile`, userData)
-      .pipe(
-        map(response => {
-          const updatedUser = { ...this.currentUserValue, ...response };
-          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-          this.currentUserSubject.next(updatedUser);
-          return response;
-        })
-      );
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  // Method to check if user has specific role
-  hasRole(role: string): boolean {
-    return this.currentUserValue?.roles?.includes(role) ?? false;
+  getCurrentUser() {
+    const user = this.currentUserSubject.value;
+    console.log('Current user:', user); // Debug log
+    return user;
+  }
+
+  isAuthenticated(): boolean {
+    const user = this.getCurrentUser();
+    console.log('Is authenticated check:', user); // Debug log
+    return !!user && !!user.id;
   }
 }

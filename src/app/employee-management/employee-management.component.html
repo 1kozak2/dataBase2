@@ -1,0 +1,78 @@
+<div class="space-y-6">
+    <!-- Add Employee Form -->
+    <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+      <h2 class="text-lg font-medium mb-4">Dodaj nowego pracownika</h2>
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Imię</label>
+            <input type="text" formControlName="firstName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Nazwisko</label>
+            <input type="text" formControlName="lastName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" formControlName="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">PESEL</label>
+            <input type="text" formControlName="pesel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Adres</label>
+            <input type="text" formControlName="address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Telefon</label>
+            <input type="tel" formControlName="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Rola</label>
+            <select formControlName="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+              <option value="receptionist">Recepcjonista</option>
+              <option value="cleaner">Sprzątaczka</option>
+              <option value="manager">Manager</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Hasło</label>
+            <input type="password" formControlName="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          </div>
+        </div>
+        <div>
+          <button 
+            type="submit" 
+            [disabled]="employeeForm.invalid || isSubmitting"
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            {{ isSubmitting ? 'Dodawanie...' : 'Dodaj pracownika' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Employees List -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+      <ul class="divide-y divide-gray-200">
+        @for (employee of employees; track employee.id) {
+          <li class="px-4 py-4 flex items-center justify-between space-x-4">
+            <div>
+              <p class="text-sm font-medium text-gray-900">
+                {{employee.firstName}} {{employee.lastName}}
+              </p>
+              <p class="text-sm text-gray-500">{{employee.email}}</p>
+              <p class="text-sm text-gray-500">{{employee.role}}</p>
+            </div>
+            <button 
+              (click)="deleteEmployee(employee.id)"
+              class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-white bg-red-600 hover:bg-red-700"
+            >
+              Usuń
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>

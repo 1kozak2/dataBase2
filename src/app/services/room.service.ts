@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RoomData } from '../rooms-page/room/room.interface';
+import { Observable } from 'rxjs';
+import { BookingRequest } from '../booking/booking-request';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -177,7 +180,8 @@ images: [
 ]
 }
   ];
-
+  private apiUrl = 'http://localhost:3001/api';
+  constructor(private http: HttpClient) {}
   getRoomById(id: string): RoomData | undefined {
     return this.rooms.find(room => room.id === id);
   }
@@ -185,4 +189,7 @@ images: [
   getAllRooms(): RoomData[] {
     return this.rooms;
   }
+  createBooking(bookingRequest: BookingRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/bookings`, bookingRequest);
+}
 }

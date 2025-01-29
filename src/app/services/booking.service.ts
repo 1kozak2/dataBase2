@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BookingRequest } from '../booking/booking-request';
+import { Booking } from '../client-profile/client-profile.component';
 
 
 @Injectable({
@@ -22,19 +23,29 @@ export class BookingService {
     });
   }
 
-  createBooking(bookingRequest: BookingRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/bookings`, bookingRequest);
+  createBooking(bookingData: any): Observable<any> {
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    const bookingWithClientId = {
+      clientId: currentUser.id,  // Add clientId to the request
+      ...bookingData,
+    };
+    return this.http.post(`${this.apiUrl}/bookings`, bookingWithClientId);
   }
 
   getBooking(bookingId: number): Observable<BookingRequest> {
     return this.http.get<BookingRequest>(`${this.apiUrl}/bookings/${bookingId}`);
   }
-
+  getUserBookings(userId: number): Observable<Booking[]> {
+    return this.http.get<Booking[]>(`${this.apiUrl}/bookings/user/${userId}`);
+  }
   updateBooking(bookingId: number, status: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/bookings/${bookingId}`, { status });
   }
 
   cancelBooking(bookingId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/bookings/${bookingId}`);
+  }
+  getBookingById(bookingId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/bookings/${bookingId}`);
   }
 }

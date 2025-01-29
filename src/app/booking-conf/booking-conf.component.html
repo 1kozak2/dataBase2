@@ -1,0 +1,33 @@
+<div class="max-w-2xl mx-auto p-6">
+    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+      <h2 class="text-2xl font-bold text-green-800 mb-4">
+        Rezerwacja potwierdzona!
+      </h2>
+      <div class="space-y-3">
+        <p class="text-gray-700">
+          <span class="font-medium">Numer rezerwacji:</span> 
+          {{ booking?.bookingId }}
+        </p>
+        <p class="text-gray-700">
+          <span class="font-medium">Numer pokoju:</span> 
+          {{ booking?.roomNumber }}
+        </p>
+        <p class="text-gray-700">
+          <span class="font-medium">Data przyjazdu:</span> 
+          {{ booking?.checkIn | date }}
+        </p>
+        <p class="text-gray-700">
+          <span class="font-medium">Data wyjazdu:</span> 
+          {{ booking?.checkOut | date }}
+        </p>
+      </div>
+      <div class="mt-6">
+        <button 
+          (click)="goToHome()" 
+          class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+        >
+          Powrót do strony głównej
+        </button>
+      </div>
+    </div>
+  </div>

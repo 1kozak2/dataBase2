@@ -1,105 +1,154 @@
-<div class="max-w-2xl mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-6">Rezerwacja pokoju</h2>
-    
-    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <!-- Dates -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium mb-2">Data zameldowania</label>
-          <input 
-            type="date" 
-            formControlName="checkIn"
-            class="w-full p-2 border rounded"
-            [min]="today"
-          >
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-2">Data wymeldowania</label>
-          <input 
-            type="date" 
-            formControlName="checkOut"
-            class="w-full p-2 border rounded"
-            [min]="minCheckOutDate"
-          >
-        </div>
-      </div>
+   <div class="max-w-4xl mx-auto p-6">
+      <h2 class="text-2xl font-semibold mb-6">Formularz rezerwacji</h2>
 
-      <!-- Guest Info -->
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium mb-2">Imię i nazwisko</label>
-          <input 
-            type="text" 
-            formControlName="guestName"
-            class="w-full p-2 border rounded"
-            placeholder="Jan Kowalski"
-          >
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Room Type Selection -->
+        @if (!preselectedRoom) {
+          <div>
+            <label class="block text-sm font-medium mb-2">Typ pokoju</label>
+            <select 
+              formControlName="roomClass"
+              class="w-full p-2 border rounded-md"
+            >
+              <option value="">Wybierz typ pokoju</option>
+              @for (type of roomClasses; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+        }
+
+        <!-- Dates -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Data przyjazdu</label>
+            <input 
+              type="date"
+              formControlName="checkIn"
+              [min]="today"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Data wyjazdu</label>
+            <input 
+              type="date"
+              formControlName="checkOut"
+              [min]="minCheckOutDate"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
         </div>
-        
-        <div>
-          <label class="block text-sm font-medium mb-2">Email</label>
-          <input 
-            type="email" 
-            formControlName="guestEmail"
-            class="w-full p-2 border rounded"
-            placeholder="jan@example.com"
-          >
+
+        <!-- Guest Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Imię</label>
+            <input 
+              type="text"
+              formControlName="firstName"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Nazwisko</label>
+            <input 
+              type="text"
+              formControlName="lastName"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Email</label>
+            <input 
+              type="email"
+              formControlName="email"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Telefon</label>
+            <input 
+              type="tel"
+              formControlName="phone"
+              class="w-full p-2 border rounded-md"
+            >
+          </div>
         </div>
-        
-        <div>
-          <label class="block text-sm font-medium mb-2">Telefon</label>
-          <input 
-            type="tel" 
-            formControlName="guestPhone"
-            class="w-full p-2 border rounded"
-            placeholder="+48 123 456 789"
-          >
-        </div>
-        
+
+        <!-- Additional Options -->
         <div>
           <label class="block text-sm font-medium mb-2">Liczba gości</label>
           <input 
-            type="number" 
-            formControlName="numberOfGuests"
-            class="w-full p-2 border rounded"
+            type="number"
+            formControlName="guestCount"
             min="1"
+            class="w-full p-2 border rounded-md"
           >
         </div>
-        
+
+        <div>
+          <label class="block text-sm font-medium mb-2">Wyżywienie</label>
+          <select 
+            formControlName="mealPlan"
+            class="w-full p-2 border rounded-md"
+          >
+            <option value="none">Bez wyżywienia</option>
+            <option value="śniadanie, obiad i kolacja">śniadanie, obiad i kolacja</option>
+            <option value="sam obiad">sam obiad</option>
+            <option value="samo śniadanie i kolacja">samo śniadanie i kolacja</option>
+          </select>
+        </div>
+
         <div>
           <label class="block text-sm font-medium mb-2">Dodatkowe uwagi</label>
           <textarea 
             formControlName="specialRequests"
-            class="w-full p-2 border rounded"
             rows="3"
-            placeholder="Specjalne życzenia, uwagi..."
+            class="w-full p-2 border rounded-md"
           ></textarea>
         </div>
-      </div>
 
-      <!-- Submit -->
-      <div class="flex justify-between items-center">
-        <button 
-          type="button" 
-          class="px-4 py-2 text-gray-600 border rounded"
-          (click)="goBack()"
-        >
-          Anuluj
-        </button>
-        
-        <button 
-          type="submit"
-          class="px-4 py-2 bg-blue-600 text-white rounded"
-          [disabled]="bookingForm.invalid || isSubmitting"
-        >
-          {{ isSubmitting ? 'Przetwarzanie...' : 'Potwierdź rezerwację' }}
-        </button>
-      </div>
-    </form>
+        <!-- Total Price -->
+        <div class="bg-gray-50 p-4 rounded-md">
+          <h3 class="font-medium mb-2">Podsumowanie</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span>Pokój:</span>
+              <span>{{ calculateRoomPrice() }} PLN</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Wyżywienie:</span>
+              <span>{{ calculateMealPrice() }} PLN</span>
+            </div>
+            <div class="border-t pt-2 font-medium flex justify-between">
+              <span>Razem:</span>
+              <span>{{ calculateTotal() }} PLN</span>
+            </div>
+          </div>
+        </div>
 
-    @if (errorMessage) {
-      <div class="mt-4 p-4 bg-red-100 text-red-700 rounded">
-        {{ errorMessage }}
-      </div>
-    }
-  </div>
+        @if (errorMessage) {
+          <div class="bg-red-50 text-red-600 p-3 rounded-md">
+            {{ errorMessage }}
+          </div>
+        }
+
+        <div class="flex justify-end space-x-4">
+          <button 
+            type="button"
+            (click)="goBack()"
+            class="px-4 py-2 text-gray-600 border rounded-md hover:bg-gray-50"
+          >
+            Anuluj
+          </button>
+          <button 
+            type="submit"
+            [disabled]="!bookingForm.valid || isSubmitting"
+            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+          >
+            {{ isSubmitting ? 'Przetwarzanie...' : 'Zarezerwuj' }}
+          </button>
+        </div>
+      </form>
+    </div>

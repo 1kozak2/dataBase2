@@ -1,22 +1,73 @@
-<header>
-    <div class="desktop-logo">
-        <a routerLink="/">
-            <img src="rz_logo_L.png" alt="Avenue Manor Logo">
-        </a>
-        <h1>Avenue Manor</h1>
+<header class="bg-white shadow-md">
+  <div class="container mx-auto px-4 py-2 flex items-center justify-between">
+    <div class="desktop-logo flex items-center">
+      <a routerLink="/">
+        <img src="rz_logo_L.png" alt="Avenue Manor Logo" class="h-12">
+      </a>
+      <h1 class="text-xl font-bold ml-2">Avenue Manor</h1>
     </div>
-    <nav>
-        <a routerLink="/">Overview</a>
-        <a routerLink="/gallery">Gallery</a>
-        <a routerLink="/suites-and-rooms">Suites & Rooms</a>
-        <a routerLink="/dining">Dining</a>
-        <a routerLink="/contact">Contact</a>
+
+    <nav class="hidden md:flex space-x-6">
+      <a routerLink="/" class="text-gray-600 hover:text-gray-900">Overview</a>
+      <a routerLink="/gallery" class="text-gray-600 hover:text-gray-900">Gallery</a>
+      <a routerLink="/suites-and-rooms" class="text-gray-600 hover:text-gray-900">Suites & Rooms</a>
+      <a routerLink="/dining" class="text-gray-600 hover:text-gray-900">Dining</a>
+      <a routerLink="/contact" class="text-gray-600 hover:text-gray-900">Contact</a>
     </nav>
-    <div>
+
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center">
         <img src="" alt="">
-        <span>+48 538-130-762</span>
+        <span class="text-gray-600">+48 538-130-762</span>
+      </div>
+
+      <button routerLink="/booking" 
+              class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+        Reserve
+      </button>
+
+      @if (currentUser$ | async; as user) {
+        <div class="relative">
+          <button 
+            (click)="toggleDropdown($event)"
+            class="dropdown-button flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+            <span class="h-8 w-8 bg-teal-100 rounded-full flex items-center justify-center">
+              {{ getUserInitials(user) }}
+            </span>
+            <span>{{ user.firstName }}</span>
+          </button>
+          
+          @if (isDropdownOpen) {
+            <div class="user-dropdown absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+              <a routerLink="/profile" 
+                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                Mój Profil
+              </a>
+              @if (isEmployeeRole(user.role)) {
+                <a [routerLink]="getEmployeeDashboardLink(user.role)"
+                   class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  Panel {{ getRoleName(user.role) }}
+                </a>
+              }
+              <button (click)="logout()" 
+                      class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                Wyloguj się
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="flex items-center space-x-4">
+          <a routerLink="/auth/login" 
+             class="text-gray-600 hover:text-gray-900">
+            Login
+          </a>
+          <a routerLink="/auth/signup" 
+             class="text-gray-600 hover:text-gray-900">
+            Signup
+          </a>
+        </div>
+      }
     </div>
-    <button routerLink="/booking">Reserve</button>
-    <a routerLink="/auth/login">Login</a>
-    <a routerLink="/auth/signup">Signup</a>
+  </div>
 </header>
